@@ -11,7 +11,7 @@ class Main extends Engine
 #if debug
 		HXP.console.enable();
 #end
-		psrnd.seed = 100;
+		psrnd.seed = 77;
 		HXP.scene = new MainScene(psrnd);
 	}
 	

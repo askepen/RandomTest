@@ -5,30 +5,38 @@ class Digger
 	var mapWidth:Int;
 	var x:Int;
 	var y:Int;
-	var lifespan:Int = 10;
+	var lifespan:Int;
 	var random:PseudoRandom;
 	var dir:Int = 0;
+	var turnFreq:Int = 8;
 	
-	public function new (rand:PseudoRandom, w:Int, h:Int, startx:Int, starty:Int) 
+	public function new (seed:UInt, w:Int, h:Int, startx:Int, starty:Int) 
 	{
+		random = new PseudoRandom();
+		random.seed = seed;
+		
 		mapWidth  = w;
 		mapHeight = h;
+		
 		x = startx;
 		y = starty;
-		random = rand;
+		
+		lifespan = random.nextIntRange(2,20);
 	}		
 	
 	public function dig():Array<Array<Int>>
 	{
+		dugHoles.push([x,y]);
+		
 		for(i in 0...lifespan)
 		{
 			var num:Float = random.nextFloatRange(0,1);
 			
-			if ( num < 1/7 ) // turn left 
+			if ( num < 1/turnFreq ) // turn left 
 			{
 				dir += 90;
 			}
-			else if ( num < 2/7 ) // turn right 
+			else if ( num < 2/turnFreq ) // turn right 
 			{
 				dir -= 90;
 			}
@@ -54,6 +62,26 @@ class Digger
 			}
 			
 			dugHoles.push([x,y]);
+/*			dugHoles.push([x+1,y]);
+			dugHoles.push([x,y+1]);
+			dugHoles.push([x+1,y+1]);*/
+			
+			
+			//chance to create a 3x3 room
+			if (random.nextFloatRange(0,1) < 1/3 && i == lifespan-1)
+			{
+				dugHoles.push([x-1,y]);
+				dugHoles.push([x+1,y]);
+				dugHoles.push([x+1,y-1]);
+				
+				dugHoles.push([x,y-1]);
+				dugHoles.push([x,y+1]);
+				dugHoles.push([x-1,y+1]);
+				
+				dugHoles.push([x+-1,y-1]);
+				dugHoles.push([x+1,y+1]);
+			}
+			
 		}
 		
 		return dugHoles;

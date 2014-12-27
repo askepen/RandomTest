@@ -1,11 +1,17 @@
 import com.haxepunk.Scene;
 import com.haxepunk.HXP;
 import com.haxepunk.Entity;
+import com.haxepunk.utils.Input;
 import com.haxepunk.graphics.Image;
 
 class MainScene extends Scene
 {
 	var random:PseudoRandom;
+	
+	//map details:
+	var holes:Array<Array<Int>> = new Array(); //generate a 2D array
+	var tilesX = 22; // Math.round(HXP.width/32)
+	var tilesY = 22; // Math.round(HXP.height/32)
 	
 	public function new(rand:PseudoRandom)
 	{
@@ -19,16 +25,10 @@ class MainScene extends Scene
 	}
 	
 	/**
-	*  
+	*  digs out caves based on seed
 	*/
 	function caves():Void
 	{
-
-//Make the map
-		var holes:Array<Array<Int>> = new Array(); //generate a 2D array
-		var tilesX = 21; // Math.round(HXP.width/32)
-		var tilesY = 21; // Math.round(HXP.height/32)
-	 	
 	 	//populate the array with 1's 
 	 	for (j in 0...tilesY) 
 		{
@@ -36,21 +36,27 @@ class MainScene extends Scene
 			for (i in 0...tilesX) holes[j].push(1);
 		}
 		
-//Spawn diggers
-		var d:Digger = new Digger(random, tilesX, tilesY, 10, 10);
-		var arr:Array<Array<Int>> = d.dig();
-		
-		for (i in 0...arr.length-1)
+		//Spawn diggers and dig
+		for ( i in 0...10 )
 		{
-			holes[ arr[i][0] ] [ arr[i][1] ] = 0;
+			digger();
 		}
-	
-//spawn entities
+			
+		//Spawn entities, where applicable 
 		for (j in 0...tilesY) 
 			for (i in 0...tilesX)
 				if ( holes[j][i] == 1 )
 					add(new Entity(i*32,j*32,new Image("graphics/tile.png")));
 				
+	}
+	
+	function digger():Void
+	{
+		var d:Digger = new Digger(random.nextInt(), tilesX, tilesY, 10, 10);
+		var arr:Array<Array<Int>> = d.dig();
+		
+		for (i in 0...arr.length)
+			holes[ arr[i][0] ] [ arr[i][1] ] = 0;
 	}
 	
 	
