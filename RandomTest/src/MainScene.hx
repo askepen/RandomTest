@@ -31,8 +31,8 @@ class MainScene extends Scene
 	*/
 	function caves():Void
 	{
-		tilesX = Settings.TILES_X;
-		tilesY = Settings.TILES_Y;
+		tilesX = Settings.MAP_TILES_X;
+		tilesY = Settings.MAP_TILES_Y;
 		
 	 	//populate the array with 1's 
 	 	for (j in 0...tilesY) 
@@ -42,7 +42,7 @@ class MainScene extends Scene
 		}
 		
 		//Spawn diggers and dig
-		for ( i in 0...10 )
+		for ( i in 0...Settings.DIGGER_NUM_OF_DIGGERS )
 		{
 			digger();
 		}

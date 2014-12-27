@@ -17,7 +17,7 @@ class Digger
 		random = new PseudoRandom();
 		random.seed = seed;
 		
-		turnFreq = Settings.TURN_FREQUENCY;
+		turnFreq = Settings.DIGGER_TURN_FREQUENCY;
 		
 		mapWidth  = w;
 		mapHeight = h;
