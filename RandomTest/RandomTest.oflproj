@@ -81,6 +81,8 @@
     <Compile Include="RandomTest.oflproj" />
     <Compile Include="assets\openfl.svg" />
     <Compile Include="src\PseudoRandom.hx" />
+    <Compile Include="assets\graphics\tile.png" />
+    <Compile Include="src\Digger.hx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\" />

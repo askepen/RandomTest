@@ -8,28 +8,27 @@ class Main extends Engine
 	
 	override public function init()
 	{
-		
 #if debug
 		HXP.console.enable();
 #end
-		HXP.scene = new MainScene();
-		
-		var currD:Float = Date.now().getTime();
-		psrnd.seed = 100;//Std.int(currD);
-		
+		psrnd.seed = 100;
+		HXP.scene = new MainScene(psrnd);
 	}
 	
 	public static function main() { new Main(); }
 	
 	override public function update():Void
 	{
-		if(Input.mousePressed)
-		{
-			
-			
-			HXP.console.log([psrnd.seed, psrnd.nextInt()]);
-		}
-		
+		if ( Input.mousePressed ) newMap(); 
 		super.update();
+	}
+	
+	function newMap():Void
+	{
+		var currD:Float = Date.now().getTime();
+		psrnd.seed = Std.int(currD);
+	//	psrnd.seed = 1014;
+		
+		HXP.scene = new MainScene(psrnd);
 	}
 }
