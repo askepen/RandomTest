@@ -83,6 +83,7 @@
     <Compile Include="src\PseudoRandom.hx" />
     <Compile Include="assets\graphics\tile.png" />
     <Compile Include="src\Digger.hx" />
+    <Compile Include="src\Settings.hx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\" />

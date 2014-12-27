@@ -11,7 +11,7 @@ class Main extends Engine
 #if debug
 		HXP.console.enable();
 #end
-		psrnd.seed = 77;
+		psrnd.seed = Settings.SEED;
 		HXP.scene = new MainScene(psrnd);
 	}
 	
@@ -26,8 +26,7 @@ class Main extends Engine
 	function newMap():Void
 	{
 		var currD:Float = Date.now().getTime();
-		psrnd.seed = Std.int(currD);
-	//	psrnd.seed = 1014;
+	//	psrnd.seed = Std.int(currD); // set seed to seconds since 1st of jan 1970
 		
 		HXP.scene = new MainScene(psrnd);
 	}

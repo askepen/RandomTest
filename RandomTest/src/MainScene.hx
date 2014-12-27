@@ -10,8 +10,10 @@ class MainScene extends Scene
 	
 	//map details:
 	var holes:Array<Array<Int>> = new Array(); //generate a 2D array
-	var tilesX = 22; // Math.round(HXP.width/32)
-	var tilesY = 22; // Math.round(HXP.height/32)
+	var tilesX:Int;
+	var tilesY:Int;
+	var playerSpawnX:Int;
+	var playerSpawnY:Int;
 	
 	public function new(rand:PseudoRandom)
 	{
@@ -29,11 +31,14 @@ class MainScene extends Scene
 	*/
 	function caves():Void
 	{
+		tilesX = Settings.TILES_X;
+		tilesY = Settings.TILES_Y;
+		
 	 	//populate the array with 1's 
 	 	for (j in 0...tilesY) 
 		{
 			holes.push(new Array());
-			for (i in 0...tilesX) holes[j].push(1);
+			for (i in 0...tilesX) holes[j].push(0);
 		}
 		
 		//Spawn diggers and dig
@@ -47,16 +52,19 @@ class MainScene extends Scene
 			for (i in 0...tilesX)
 				if ( holes[j][i] == 1 )
 					add(new Entity(i*32,j*32,new Image("graphics/tile.png")));
-				
+			
 	}
 	
 	function digger():Void
 	{
-		var d:Digger = new Digger(random.nextInt(), tilesX, tilesY, 10, 10);
+		playerSpawnX = Math.round(tilesX/2);
+		playerSpawnY = Math.round(tilesY/2);
+		
+		var d:Digger = new Digger(random.nextInt(), tilesX, tilesY, playerSpawnX, playerSpawnY);
 		var arr:Array<Array<Int>> = d.dig();
 		
 		for (i in 0...arr.length)
-			holes[ arr[i][0] ] [ arr[i][1] ] = 0;
+			holes[ arr[i][1] ] [ arr[i][0] ] = 1;
 	}
 	
 	
