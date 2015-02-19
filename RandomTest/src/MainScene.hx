@@ -38,21 +38,29 @@ class MainScene extends Scene
 	 	for (j in 0...tilesY) 
 		{
 			holes.push(new Array());
-			for (i in 0...tilesX) holes[j].push(0);
+			for (i in 0...tilesX) holes[j].push(1);
 		}
 		
 		//Spawn diggers and dig
-		for ( i in 0...Settings.DIGGER_NUM_OF_DIGGERS )
+		for ( i in 0...Settings.DIGGER_NUMBER )
 		{
 			digger();
 		}
 			
 		//Spawn entities, where applicable 
 		for (j in 0...tilesY) 
+		{
 			for (i in 0...tilesX)
-				if ( holes[j][i] == 1 )
-					add(new Entity(i*32,j*32,new Image("graphics/tile.png")));
-			
+			{
+				if ( holes[j][i] == 0 )
+				{
+					var img:Image = new Image("graphics/tile.png");
+					img.scale = 0.5;
+					add(new Entity(i*32*img.scale,j*32*img.scale,img));
+				}
+			}
+		}
+					
 	}
 	
 	function digger():Void
@@ -64,7 +72,7 @@ class MainScene extends Scene
 		var arr:Array<Array<Int>> = d.dig();
 		
 		for (i in 0...arr.length)
-			holes[ arr[i][1] ] [ arr[i][0] ] = 1;
+			holes[ arr[i][1] ] [ arr[i][0] ] = 0;
 	}
 	
 	
